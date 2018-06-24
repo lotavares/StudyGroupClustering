@@ -107,19 +107,21 @@ def leArquivo(nomeArq, tipoEstrutura):
     return grafo
 
 def montaGrupos(grafo):
+    # cria uma lista de grupos contendo inicialmente dois vertices e uma aresta (uma das 12 maiores)
     grupos = [Grupo] * grafo.qtdGrupos
     for i in range(grafo.qtdGrupos):
         grupos[i] = Grupo(grafo.limites[i][0], grafo.limites[i][1], grafo.maioresArestas[i])
         grupos[i].somaAptidao = grafo.aptidao[grafo.maioresArestas[i][0]] + grafo.aptidao[grafo.maioresArestas[i][1]]
         grupos[i].somaArestas = grafo.maioresArestas[i][2]
-        print grupos[i].limInferior
-        print grupos[i].limSuperior
-        print grupos[i].somaAptidao
-        print grupos[i].somaArestas
-        print grupos[i].qtdVertices
-        print grupos[i].qtdArestas
-        print i, ": " , grupos[i].arestas , "\n"
-
+        #~ print grupos[i].limInferior
+        #~ print grupos[i].limSuperior
+        #~ print grupos[i].somaAptidao
+        #~ print grupos[i].somaArestas
+        #~ print grupos[i].qtdVertices
+        #~ print grupos[i].qtdArestas
+        #~ print i, ": " , grupos[i].arestas , "\n"
+    
+    return grupos
 
 def main():
     nomeArq = raw_input("Nome do arquivo: ")
@@ -151,7 +153,7 @@ def main():
         #~ grafo.imprimeListaAdjacencia(estrutura)
 
     
-    montaGrupos(grafo)
+    grupos = montaGrupos(grafo)
     
     
 
