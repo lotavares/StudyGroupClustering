@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from grafo import Grafo
+from grupo import Grupo
 
 def leArquivo(nomeArq, tipoEstrutura):
     arquivo = open(nomeArq)
@@ -46,24 +47,27 @@ def leArquivo(nomeArq, tipoEstrutura):
     maioresArestas = [0] * qtdGrupos
     for i in range(qtdGrupos):
         maioresArestas[i] = [0] * 3
-
+    # lista que define vertices que ja foram inseridos em um determinado grupo
     inseridos = [False] * qtdVertices
     print inseridos
-
+    #leitura dos vertices do arquivo
     for i in range(qtdArestas):
         linha = arquivo.readline()
         valores = linha.split(' ')
         arestas[i][0] = (int(valores[0]))
         arestas[i][1] = (int(valores[1]))
         arestas[i][2] = (float(valores[2]))
-
+        
+        # (menorDoMaior) é o valor da aresta de menor peso da matriz (maioresArestas)
         menorDoMaior = maioresArestas[0][2]
+        # posicao referente a aresta de menor valor(menorDoMaior)
         posMenor = 0
         for j in range(qtdGrupos):
+            #verifica se o valor a ser inserido é menor que o menor valor da matriz 
             if maioresArestas[j][2] <= menorDoMaior:
                 menorDoMaior = maioresArestas[j][2]
                 posMenor = j
-
+        #
         if inseridos[arestas[i][0]] or inseridos[arestas[i][1]]:
             for j in range(qtdGrupos):
                 if inseridos[arestas[i][0]]:
@@ -96,11 +100,26 @@ def leArquivo(nomeArq, tipoEstrutura):
     print inseridos
     for i in range(qtdGrupos):
         print maioresArestas[i]
-    
+
     # chama o construtor do grafo
-    grafo = Grafo(nomeArq, qtdVertices, qtdArestas, arestas, tipoEstrutura, aptidao)
+    grafo = Grafo(nomeArq, qtdVertices, qtdArestas, arestas, tipoEstrutura, aptidao, inseridos, maioresArestas, limites, qtdGrupos)
     
     return grafo
+
+def montaGrupos(grafo):
+    grupos = [Grupo] * grafo.qtdGrupos
+    for i in range(grafo.qtdGrupos):
+        grupos[i] = Grupo(grafo.limites[i][0], grafo.limites[i][1], grafo.maioresArestas[i])
+        grupos[i].somaAptidao = grafo.aptidao[grafo.maioresArestas[i][0]] + grafo.aptidao[grafo.maioresArestas[i][1]]
+        grupos[i].somaArestas = grafo.maioresArestas[i][2]
+        print grupos[i].limInferior
+        print grupos[i].limSuperior
+        print grupos[i].somaAptidao
+        print grupos[i].somaArestas
+        print grupos[i].qtdVertices
+        print grupos[i].qtdArestas
+        print i, ": " , grupos[i].arestas , "\n"
+
 
 def main():
     nomeArq = raw_input("Nome do arquivo: ")
@@ -123,31 +142,36 @@ def main():
 
     if grafo.tipoEstrutura == "A":
         estrutura = grafo.matrizAdjacencia()
-        grafo.imprimeMatrizAdjacencia(estrutura)
+        #~ grafo.imprimeMatrizAdjacencia(estrutura)
     elif grafo.tipoEstrutura == "I":
         estrutura = grafo.matrizIncidencia()
-        grafo.imprimeMatrizIncidencia(estrutura)
+        #~ grafo.imprimeMatrizIncidencia(estrutura)
     else:
         estrutura = grafo.listaAdjacencia()
-        grafo.imprimeListaAdjacencia(estrutura)
+        #~ grafo.imprimeListaAdjacencia(estrutura)
 
-    menu = True
-    print('''--> Escolha uma acao, digite:
-    -1 para obter vizinhos de u
-    -2 para obter predecessores de u
-    -3 para obter sucessores de u
-    -4 para verificar se u e v sao vizinhos
-    -5 para verificar se v eh predecessor de u
-    -6 para verificar se v eh sucessor de u
-    -7 para deletar um vertice u
-    -8 para deletar uma aresta u v
-    -9 para gerar um subgrafo induzido por vertices
-    -10 para gerar um suggrafo induzido por arestas
-    -11 para imprimir o grafo na estrutura atual
-    -12 para converter estrutura atual para matriz de adjacencia
-    -13 para converter estrutura atual para matriz de incidencia
-    -14 para converter estrutura atual para lista de adjacencia
-    -SAIR para encerrar o programa''')
+    
+    montaGrupos(grafo)
+    
+    
+
+    #~ menu = True
+    #~ print('''--> Escolha uma acao, digite:
+    #~ -1 para obter vizinhos de u
+    #~ -2 para obter predecessores de u
+    #~ -3 para obter sucessores de u
+    #~ -4 para verificar se u e v sao vizinhos
+    #~ -5 para verificar se v eh predecessor de u
+    #~ -6 para verificar se v eh sucessor de u
+    #~ -7 para deletar um vertice u
+    #~ -8 para deletar uma aresta u v
+    #~ -9 para gerar um subgrafo induzido por vertices
+    #~ -10 para gerar um suggrafo induzido por arestas
+    #~ -11 para imprimir o grafo na estrutura atual
+    #~ -12 para converter estrutura atual para matriz de adjacencia
+    #~ -13 para converter estrutura atual para matriz de incidencia
+    #~ -14 para converter estrutura atual para lista de adjacencia
+    #~ -SAIR para encerrar o programa''')
 
     #~ while menu:
         #~ opcao = int(input("Sua escolha eh: "))

@@ -2,13 +2,17 @@
 
 class Grafo:
     # construtor da classe grafo
-    def __init__(self, nomeArq, qtdVertices, qtdArestas, arestas, tipoEstrutura, aptidao):
+    def __init__(self, nomeArq, qtdVertices, qtdArestas, arestas, tipoEstrutura, aptidao, inseridos, maioresArestas, limites, qtdGrupos):
         self.qtdVertices = qtdVertices
         self.qtdArestas = qtdArestas
         self.arestas = arestas
         self.tipoEstrutura = tipoEstrutura
         self.aptidao = aptidao
-        
+        self.inseridos = inseridos
+        self.maioresArestas = maioresArestas
+        self.limites = limites
+        self.qtdGrupos = qtdGrupos
+    
     # estrutura de dado: matriz de adjacencia
     def matrizAdjacencia(self):
         matriz = [0] * self.qtdVertices
