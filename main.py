@@ -26,13 +26,14 @@ def leArquivo(nomeArq, tipoEstrutura):
         limites[i][0] = int(limitesAux[posAux])
         limites[i][1] = int(limitesAux[posAux + 1])
         posAux += 2
-    for i in range(qtdGrupos):
-        print limites[i]
+        
+    #~ for i in range(qtdGrupos):
+        #~ print limites[i]
     
     # leitura da terceira linha, pesos dos vértices
     aptidao = arquivo.readline()
-    aptidao = list(map(int, aptidao.split(' ')))
     print aptidao
+    aptidao = list(map(int, aptidao.split(' ')))
     
     # leitura do restante do arquivo, arestas
     qtdArestas = (qtdVertices * (qtdVertices - 1)) / 2
@@ -49,7 +50,6 @@ def leArquivo(nomeArq, tipoEstrutura):
         maioresArestas[i] = [0] * 3
     # lista que define vertices que ja foram inseridos em um determinado grupo
     inseridos = [False] * qtdVertices
-    print inseridos
     #leitura dos vertices do arquivo
     for i in range(qtdArestas):
         linha = arquivo.readline()
@@ -67,7 +67,7 @@ def leArquivo(nomeArq, tipoEstrutura):
             if maioresArestas[j][2] <= menorDoMaior:
                 menorDoMaior = maioresArestas[j][2]
                 posMenor = j
-        #
+        # as qtdGrupos maiores arestas são armazenadas em "maioresArestas"
         if inseridos[arestas[i][0]] or inseridos[arestas[i][1]]:
             for j in range(qtdGrupos):
                 if inseridos[arestas[i][0]]:
@@ -97,7 +97,6 @@ def leArquivo(nomeArq, tipoEstrutura):
             maioresArestas[posMenor][1] = arestas[i][1]
             maioresArestas[posMenor][2] = arestas[i][2]
             
-    print inseridos
     for i in range(qtdGrupos):
         print maioresArestas[i]
 
@@ -120,7 +119,7 @@ def montaGrupos(grafo):
         #~ print grupos[i].qtdVertices
         #~ print grupos[i].qtdArestas
         #~ print i, ": " , grupos[i].arestas , "\n"
-    
+        #~ print grupos[i].vertices
     return grupos
 
 def main():
@@ -154,9 +153,43 @@ def main():
 
     
     grupos = montaGrupos(grafo)
+    somaQtdVertices = 0
+    somaArestas = 0
+    #~ for i in range(grafo.qtdGrupos):
+        #~ print "GRUPO ", i
+        #~ grupos[i].matAdLimInf(grafo, estrutura)
+        #~ somaQtdVertices += grupos[i].qtdVertices
+        #~ somaArestas += grupos[i].somaArestas
     
-    
+    #~ print somaQtdVertices, somaArestas
 
+    #~ somaQtdVertices = 0
+    #~ for i in range(grafo.qtdGrupos):
+        #~ print "GRUPO ", i
+        #~ grupos[i].matAdLimSup(grafo, estrutura)
+        #~ somaQtdVertices += grupos[i].qtdVertices
+        #~ somaArestas += grupos[i].somaArestas
+    
+    for i in range(grafo.qtdGrupos):
+        print "GRUPO", i
+        grupos[i].matIncLimInf(grafo, estrutura)
+        somaQtdVertices += grupos[i].qtdVertices
+        somaArestas += grupos[i].somaArestas
+    
+    somaQtdVertices = 0
+    print somaQtdVertices, somaArestas
+    
+    for i in range(grafo.qtdGrupos):
+        print "GRUPO ", i
+        grupos[i].matIncLimSup(grafo, estrutura)
+        somaQtdVertices += grupos[i].qtdVertices
+        somaArestas += grupos[i].somaArestas
+        
+    print somaQtdVertices, somaArestas
+
+    #~ mana = grupos[0].matrizAd()
+    #~ mana.imprimeMatrizAdjacenci()
+    
     #~ menu = True
     #~ print('''--> Escolha uma acao, digite:
     #~ -1 para obter vizinhos de u
