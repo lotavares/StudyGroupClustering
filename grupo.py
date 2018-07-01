@@ -68,6 +68,12 @@ class Grupo:
                 self.qtdVertices += 1
                 self.vertices.append(vertice)
 
+        print self.somaAptidao
+        print self.somaArestas
+        print self.qtdVertices
+        print self.qtdArestas
+        print self.vertices
+
     def matAdLimSup(self, grafo, matrizAdjacencia):
         cont = 0
         while self.somaAptidao <= self.limSuperior and cont != grafo.qtdVertices:
@@ -100,6 +106,12 @@ class Grupo:
                 self.qtdVertices += 1
                 self.vertices.append(vertice)
             cont += 1
+
+        print self.somaAptidao
+        print self.somaArestas
+        print self.qtdVertices
+        print self.qtdArestas
+        print self.vertices
     
     def matIncLimInf(self, grafo, matrizIncidencia):
         cont = 0
@@ -143,6 +155,8 @@ class Grupo:
                             aux.append(matrizIncidencia[j][vertice])
                             self.arestas.append(aux)
                             contador += 0
+                            del(matrizIncidencia[j])
+                            grafo.qtdArestas -= 1
                         j += 1
                 self.qtdVertices += 1
                 self.vertices.append(vertice)
@@ -190,7 +204,99 @@ class Grupo:
                             aux.append(matrizIncidencia[j][vertice])
                             self.arestas.append(aux)
                             contador += 0
+                            del(matrizIncidencia[j])
+                            grafo.qtdArestas -= 1
                         j += 1
                 self.qtdVertices += 1
                 self.vertices.append(vertice)
             cont += 1
+            
+        print self.somaAptidao
+        print self.somaArestas
+        print self.qtdVertices
+        print self.qtdArestas
+        print self.vertices
+        
+    def listAdLimInf(self, grafo, listaAdjacencia):   
+        while self.somaAptidao <= self.limInferior:
+            maiorArestaAtual = 0
+            vertice = -1
+            # percorre os vértices do grupo atual
+            for i in range(self.qtdVertices):
+                # percorre todas as arestas do grafo ligadas a algum vertice do grupo
+                for j in range(grafo.qtdVertices - 1):
+                    # se o vertice não estiver em nenhum outro grupo, então verificamos se alguma de suas arestas é maior que a maiorArestaAtual 
+                    if not grafo.inseridos[listaAdjacencia[self.vertices[i]][j][0]]:
+                        if listaAdjacencia[self.vertices[i]][j][1] > maiorArestaAtual:
+                            # se for maior, verificamos se não ultrapassa o limite superior
+                            if (self.somaAptidao + grafo.aptidao[j]) < self.limSuperior:
+                                maiorArestaAtual = listaAdjacencia[self.vertices[i]][j][1];
+                                vertice = listaAdjacencia[self.vertices[i]][j][0]
+            # atualizamos os atributos do grupo atual, adicionado o vértice que ligava a maior aresta em questão ao grupo
+            if vertice != -1:
+                grafo.inseridos[vertice] = True
+                self.somaAptidao += grafo.aptidao[vertice]
+                self.qtdArestas += self.qtdVertices
+                for i in range(self.qtdVertices):
+                    for j in range(grafo.qtdVertices - 1):
+                        if listaAdjacencia[self.vertices[i]][j][0] == vertice:
+                            self.somaArestas += listaAdjacencia[self.vertices[i]][j][1]
+                            aux = []
+                            # vertice 1
+                            aux.append(vertice)
+                            # vertice 2
+                            aux.append(self.vertices[i])
+                            # valor da aresta 1 - 2
+                            aux.append(listaAdjacencia[self.vertices[i]][j][1])
+                            self.arestas.append(aux)
+                self.qtdVertices += 1
+                self.vertices.append(vertice)
+       
+        print self.somaAptidao
+        print self.somaArestas
+        print self.qtdVertices
+        print self.qtdArestas
+        print self.vertices
+                
+    def listAdLimSup(self, grafo, listaAdjacencia):
+        cont = 0
+        while self.somaAptidao <= self.limSuperior and cont != grafo.qtdVertices:
+            maiorArestaAtual = 0
+            vertice = -1
+            # percorre os vértices do grupo atual
+            for i in range(self.qtdVertices):
+                # percorre todas as arestas do grafo ligadas a algum vertice do grupo
+                for j in range(grafo.qtdVertices - 1):
+                    # se o vertice não estiver em nenhum outro grupo, então verificamos se alguma de suas arestas é maior que a maiorArestaAtual 
+                    if not grafo.inseridos[listaAdjacencia[self.vertices[i]][j][0]]:
+                        if listaAdjacencia[self.vertices[i]][j][1] > maiorArestaAtual:
+                            # se for maior, verificamos se não ultrapassa o limite superior
+                            if (self.somaAptidao + grafo.aptidao[j]) < self.limSuperior:
+                                maiorArestaAtual = listaAdjacencia[self.vertices[i]][j][1];
+                                vertice = listaAdjacencia[self.vertices[i]][j][0]
+            # atualizamos os atributos do grupo atual, adicionado o vértice que ligava a maior aresta em questão ao grupo
+            if vertice != -1:
+                grafo.inseridos[vertice] = True
+                self.somaAptidao += grafo.aptidao[vertice]
+                self.qtdArestas += self.qtdVertices
+                for i in range(self.qtdVertices):
+                    for j in range(grafo.qtdVertices - 1):
+                        if listaAdjacencia[self.vertices[i]][j][0] == vertice:
+                            self.somaArestas += listaAdjacencia[self.vertices[i]][j][1]
+                            aux = []
+                            # vertice 1
+                            aux.append(vertice)
+                            # vertice 2
+                            aux.append(self.vertices[i])
+                            # valor da aresta 1 - 2
+                            aux.append(listaAdjacencia[self.vertices[i]][j][1])
+                            self.arestas.append(aux)
+                self.qtdVertices += 1
+                self.vertices.append(vertice)
+            cont += 1
+        
+        print self.somaAptidao
+        print self.somaArestas
+        print self.qtdVertices
+        print self.qtdArestas
+        print self.vertices
