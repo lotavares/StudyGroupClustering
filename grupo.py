@@ -15,7 +15,7 @@ class Grupo:
         self.vertices.append(arestas[1])
     
     def matrizAd(self):
-        print self.arestas
+        print(self.arestas)
         matriz = [0] * self.qtdVertices
         
         for lin in range(self.qtdVertices):
@@ -68,11 +68,11 @@ class Grupo:
                 self.qtdVertices += 1
                 self.vertices.append(vertice)
 
-        print self.somaAptidao
-        print self.somaArestas
-        print self.qtdVertices
-        print self.qtdArestas
-        print self.vertices
+        print(self.somaAptidao)
+        print(self.somaArestas)
+        print(self.qtdVertices)
+        print(self.qtdArestas)
+        print(self.vertices)
 
     def matAdLimSup(self, grafo, matrizAdjacencia):
         cont = 0
@@ -107,11 +107,11 @@ class Grupo:
                 self.vertices.append(vertice)
             cont += 1
 
-        print self.somaAptidao
-        print self.somaArestas
-        print self.qtdVertices
-        print self.qtdArestas
-        print self.vertices
+        print(self.somaAptidao)
+        print(self.somaArestas)
+        print(self.qtdVertices)
+        print(self.qtdArestas)
+        print(self.vertices)
     
     def matIncLimInf(self, grafo, matrizIncidencia):
         cont = 0
@@ -211,11 +211,11 @@ class Grupo:
                 self.vertices.append(vertice)
             cont += 1
             
-        print self.somaAptidao
-        print self.somaArestas
-        print self.qtdVertices
-        print self.qtdArestas
-        print self.vertices
+        print(self.somaAptidao)
+        print(self.somaArestas)
+        print(self.qtdVertices)
+        print(self.qtdArestas)
+        print(self.vertices)
         
     def listAdLimInf(self, grafo, listaAdjacencia):   
         while self.somaAptidao <= self.limInferior:
@@ -252,11 +252,11 @@ class Grupo:
                 self.qtdVertices += 1
                 self.vertices.append(vertice)
        
-        print self.somaAptidao
-        print self.somaArestas
-        print self.qtdVertices
-        print self.qtdArestas
-        print self.vertices
+        print(self.somaAptidao)
+        print(self.somaArestas)
+        print(self.qtdVertices)
+        print(self.qtdArestas)
+        print(self.vertices)
                 
     def listAdLimSup(self, grafo, listaAdjacencia):
         cont = 0
@@ -295,8 +295,8 @@ class Grupo:
                 self.vertices.append(vertice)
             cont += 1
         
-        print self.somaAptidao
-        print self.somaArestas
-        print self.qtdVertices
-        print self.qtdArestas
-        print self.vertices
+        print(self.somaAptidao)
+        print(self.somaArestas)
+        print(self.qtdVertices)
+        print(self.qtdArestas)
+        print(self.vertices)

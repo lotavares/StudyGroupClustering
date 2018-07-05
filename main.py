@@ -32,11 +32,11 @@ def leArquivo(nomeArq, tipoEstrutura):
     
     # leitura da terceira linha, pesos dos vértices
     aptidao = arquivo.readline()
-    print aptidao
+    print(aptidao)
     aptidao = list(map(int, aptidao.split(' ')))
     
     # leitura do restante do arquivo, arestas
-    qtdArestas = (qtdVertices * (qtdVertices - 1)) / 2
+    qtdArestas = int((qtdVertices * (qtdVertices - 1)) / 2)
     arestas = [0] * qtdArestas
     
     for i in range(qtdArestas):
@@ -98,7 +98,7 @@ def leArquivo(nomeArq, tipoEstrutura):
             maioresArestas[posMenor][2] = arestas[i][2]
             
     for i in range(qtdGrupos):
-        print maioresArestas[i]
+        print(maioresArestas[i])
 
     # chama o construtor do grafo
     grafo = Grafo(nomeArq, qtdVertices, qtdArestas, arestas, tipoEstrutura, aptidao, inseridos, maioresArestas, limites, qtdGrupos)
@@ -123,7 +123,7 @@ def montaGrupos(grafo):
     return grupos
 
 def main():
-    nomeArq = raw_input("Nome do arquivo: ")
+    nomeArq = input("Nome do arquivo: ")
     arquivo = open(nomeArq)
 
     print('''--> Escolha sua forma de armazenamento do grafo:
@@ -133,7 +133,7 @@ def main():
     
     opcaoEscolhida = False
     while not(opcaoEscolhida):
-        tipoEstrutura = raw_input("Tipo de estrutura: ")
+        tipoEstrutura = input("Tipo de estrutura: ")
         if tipoEstrutura == "A" or tipoEstrutura == "L" or tipoEstrutura == "I":
             opcaoEscolhida = True
         else:
@@ -156,16 +156,16 @@ def main():
     somaQtdVertices = 0
     somaArestas = 0
     for i in range(grafo.qtdGrupos):
-        print "GRUPO ", i
+        print("GRUPO ", i)
         grupos[i].matAdLimInf(grafo, estrutura)
         somaQtdVertices += grupos[i].qtdVertices
         somaArestas += grupos[i].somaArestas
     
-    print somaQtdVertices, somaArestas
+    print(somaQtdVertices, somaArestas)
 
     somaQtdVertices = 0
     for i in range(grafo.qtdGrupos):
-        print "GRUPO ", i
+        print("GRUPO ", i)
         grupos[i].matAdLimSup(grafo, estrutura)
         somaQtdVertices += grupos[i].qtdVertices
         somaArestas += grupos[i].somaArestas
@@ -201,7 +201,7 @@ def main():
         #~ somaQtdVertices += grupos[i].qtdVertices
         #~ somaArestas += grupos[i].somaArestas
         
-    print somaQtdVertices, somaArestas
+    print(somaQtdVertices, somaArestas)
     
     #~ mana = grupos[0].matrizAd()
     #~ mana.imprimeMatrizAdjacenci()
