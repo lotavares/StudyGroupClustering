@@ -112,6 +112,32 @@ def montaGrupos(grafo):
         grupos[i] = Grupo(grafo.limites[i][0], grafo.limites[i][1], grafo.maioresArestas[i])
         grupos[i].somaAptidao = grafo.aptidao[grafo.maioresArestas[i][0]] + grafo.aptidao[grafo.maioresArestas[i][1]]
         grupos[i].somaArestas = grafo.maioresArestas[i][2]
+        
+        listaAux = []
+        for j in range(grafo.qtdArestas):
+            if grupos[i].vertices[0] == grafo.arestas[j][0] or grupos[i].vertices[0] == grafo.arestas[j][1]:
+                listaAux.append(grafo.arestas[j])
+        
+        grupos[i].listaArestasOrd.append(listaAux)
+        
+        listaAux = []
+        
+        for j in range(grafo.qtdArestas):
+            if grupos[i].vertices[1] == grafo.arestas[j][0] or grupos[i].vertices[1] == grafo.arestas[j][1]:
+                listaAux.append(grafo.arestas[j])
+        
+        grupos[i].listaArestasOrd.append(listaAux)
+        
+        print("Grupo ANTES", i, grupos[i].listaArestasOrd[0])
+        print("Grupo ANTES", i, grupos[i].listaArestasOrd[1])
+        
+        grupos[i].quickSort(grupos[i].listaArestasOrd[0], len(grupos[i].listaArestasOrd[0]))
+        grupos[i].quickSort(grupos[i].listaArestasOrd[1], len(grupos[i].listaArestasOrd[1]))
+        
+        #~ print(len(grupos[i].listaArestasOrd[0]))
+        print("Grupo ", i, grupos[i].listaArestasOrd[0])
+        print("Grupo ", i, grupos[i].listaArestasOrd[1])
+        
         #~ print grupos[i].limInferior
         #~ print grupos[i].limSuperior
         #~ print grupos[i].somaAptidao
@@ -155,32 +181,46 @@ def main():
     grupos = montaGrupos(grafo)
     somaQtdVertices = 0
     somaArestas = 0
-    for i in range(grafo.qtdGrupos):
-        print("GRUPO ", i)
-        grupos[i].matAdLimInf(grafo, estrutura)
-        somaQtdVertices += grupos[i].qtdVertices
-        somaArestas += grupos[i].somaArestas
     
-    print(somaQtdVertices, somaArestas)
-
-    somaQtdVertices = 0
-    for i in range(grafo.qtdGrupos):
-        print("GRUPO ", i)
-        grupos[i].matAdLimSup(grafo, estrutura)
-        somaQtdVertices += grupos[i].qtdVertices
-        somaArestas += grupos[i].somaArestas
+    vetor = []
+    
+    #~ j = 240
+    #~ for i in range(240):
+        #~ vetor.append(j)
+        #~ j -= 1
+    
+    #~ print (vetor)
+    
+    #~ grupos[0].quickSort(vetor, 240)
+    
+    #~ print(vetor)
     
     #~ for i in range(grafo.qtdGrupos):
-        #~ print "GRUPO", i
+        #~ print("GRUPO ", i)
+        #~ grupos[i].matAdLimInf(grafo, estrutura)
+        #~ somaQtdVertices += grupos[i].qtdVertices
+        #~ somaArestas += grupos[i].somaArestas
+    
+    #~ print(somaQtdVertices, somaArestas)
+
+    #~ somaQtdVertices = 0
+    #~ for i in range(grafo.qtdGrupos):
+        #~ print("GRUPO ", i)
+        #~ grupos[i].matAdLimSup(grafo, estrutura)
+        #~ somaQtdVertices += grupos[i].qtdVertices
+        #~ somaArestas += grupos[i].somaArestas
+    
+    #~ for i in range(grafo.qtdGrupos):
+        #~ print("GRUPO", i)
         #~ grupos[i].matIncLimInf(grafo, estrutura)
         #~ somaQtdVertices += grupos[i].qtdVertices
         #~ somaArestas += grupos[i].somaArestas
     
     #~ somaQtdVertices = 0
-    #~ print somaQtdVertices, somaArestas
+    #~ print(somaQtdVertices, somaArestas)
     
     #~ for i in range(grafo.qtdGrupos):
-        #~ print "GRUPO ", i
+        #~ print("GRUPO ", i)
         #~ grupos[i].matIncLimSup(grafo, estrutura)
         #~ somaQtdVertices += grupos[i].qtdVertices
         #~ somaArestas += grupos[i].somaArestas
