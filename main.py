@@ -97,8 +97,8 @@ def leArquivo(nomeArq, tipoEstrutura):
             maioresArestas[posMenor][1] = arestas[i][1]
             maioresArestas[posMenor][2] = arestas[i][2]
             
-    for i in range(qtdGrupos):
-        print(maioresArestas[i])
+    #~ for i in range(qtdGrupos):
+        #~ print(maioresArestas[i])
 
     # chama o construtor do grafo
     grafo = Grafo(nomeArq, qtdVertices, qtdArestas, arestas, tipoEstrutura, aptidao, inseridos, maioresArestas, limites, qtdGrupos)
@@ -128,15 +128,15 @@ def montaGrupos(grafo):
         
         grupos[i].listaArestasOrd.append(listaAux)
         
-        print("Grupo ANTES", i, grupos[i].listaArestasOrd[0])
-        print("Grupo ANTES", i, grupos[i].listaArestasOrd[1])
+        #~ print("Grupo ANTES", i, grupos[i].listaArestasOrd[0])
+        #~ print("Grupo ANTES", i, grupos[i].listaArestasOrd[1])
         
         grupos[i].quickSort(grupos[i].listaArestasOrd[0], len(grupos[i].listaArestasOrd[0]))
         grupos[i].quickSort(grupos[i].listaArestasOrd[1], len(grupos[i].listaArestasOrd[1]))
         
         #~ print(len(grupos[i].listaArestasOrd[0]))
-        print("Grupo ", i, grupos[i].listaArestasOrd[0])
-        print("Grupo ", i, grupos[i].listaArestasOrd[1])
+        #~ print("Grupo ", i, grupos[i].listaArestasOrd[0])
+        #~ print("Grupo ", i, grupos[i].listaArestasOrd[1])
         
         #~ print grupos[i].limInferior
         #~ print grupos[i].limSuperior
@@ -182,6 +182,8 @@ def main():
     somaQtdVertices = 0
     somaArestas = 0
     
+    print(grupos[0].listaArestasOrd[0][1][2])
+    
     vetor = []
     
     #~ j = 240
@@ -210,20 +212,20 @@ def main():
         #~ somaQtdVertices += grupos[i].qtdVertices
         #~ somaArestas += grupos[i].somaArestas
     
-    #~ for i in range(grafo.qtdGrupos):
-        #~ print("GRUPO", i)
-        #~ grupos[i].matIncLimInf(grafo, estrutura)
-        #~ somaQtdVertices += grupos[i].qtdVertices
-        #~ somaArestas += grupos[i].somaArestas
+    for i in range(grafo.qtdGrupos):
+        print("GRUPO", i)
+        grupos[i].matIncLimInf(grafo, estrutura)
+        somaQtdVertices += grupos[i].qtdVertices
+        somaArestas += grupos[i].somaArestas
     
-    #~ somaQtdVertices = 0
-    #~ print(somaQtdVertices, somaArestas)
+    somaQtdVertices = 0
+    print(somaQtdVertices, somaArestas)
     
-    #~ for i in range(grafo.qtdGrupos):
-        #~ print("GRUPO ", i)
-        #~ grupos[i].matIncLimSup(grafo, estrutura)
-        #~ somaQtdVertices += grupos[i].qtdVertices
-        #~ somaArestas += grupos[i].somaArestas
+    for i in range(grafo.qtdGrupos):
+        print("GRUPO ", i)
+        grupos[i].matIncLimSup(grafo, estrutura)
+        somaQtdVertices += grupos[i].qtdVertices
+        somaArestas += grupos[i].somaArestas
         
     #~ print somaQtdVertices, somaArestas
 

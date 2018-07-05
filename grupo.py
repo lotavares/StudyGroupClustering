@@ -100,7 +100,7 @@ class Grupo:
                     self.arestas.append(aux)
                 self.qtdVertices += 1
                 self.vertices.append(vertice)
-                self.quickSort(grafo.arestas)
+                #~ self.quickSort(grafo.arestas)
 
         print(self.somaAptidao)
         print(self.somaArestas)
@@ -189,8 +189,6 @@ class Grupo:
                             aux.append(matrizIncidencia[j][vertice])
                             self.arestas.append(aux)
                             contador += 0
-                            del(matrizIncidencia[j])
-                            grafo.qtdArestas -= 1
                         j += 1
                 self.qtdVertices += 1
                 self.vertices.append(vertice)
