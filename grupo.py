@@ -123,8 +123,6 @@ class Grupo:
                             aux.append(matrizIncidencia[j][vertice])
                             self.arestas.append(aux)
                             contador += 0
-                            del(matrizIncidencia[j])
-                            grafo.qtdArestas -= 1
                         j += 1
                 self.qtdVertices += 1
                 self.vertices.append(vertice)
@@ -172,8 +170,6 @@ class Grupo:
                             aux.append(matrizIncidencia[j][vertice])
                             self.arestas.append(aux)
                             contador += 0
-                            del(matrizIncidencia[j])
-                            grafo.qtdArestas -= 1
                         j += 1
                 self.qtdVertices += 1
                 self.vertices.append(vertice)

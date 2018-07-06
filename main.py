@@ -67,7 +67,7 @@ def leArquivo(nomeArq):
     # lista que define quais vertices já fazem parte de um grupo, todos recebem false inicialmente
     inseridos = [False] * qtdVertices
    
-    #leitura dos vertices do arquivo
+    #leitura das arestas do arquivo
     for i in range(qtdArestas):
         linha = arquivo.readline()
         valores = linha.split(' ')
@@ -84,7 +84,7 @@ def leArquivo(nomeArq):
     qtdInseridos = 0
     i = 0
     
-    # 'maioresArestas' recebe as maiores arestas, o tamanho de 'maiores arestas' é determinado pela quantidade de grupos exigidas
+    # 'maioresArestas' recebe as maiores arestas, o tamanho de 'maioresArestas' é determinado pela quantidade de grupos exigidos
     while i < qtdArestas and qtdInseridos < qtdGrupos:
         jaExiste = False
         # vemos se a aresta atual pode ser inserida, ela poderá se nenhum vertice já fizer parte de 'maioresArestas'
@@ -141,12 +141,13 @@ def main():
             if opcao == 1 or opcao == 2 or opcao == 3 or opcao == 4:
                 opcaoEscolhida = True
             else:
-                print("\nTipo de estrutura invalida\n")
+                print("\nEscolha invalida\n")
+                opcao = int(input("\nSua escolha e': "))
         
         grafo = leArquivo(nomeArq)
         
         # iniciamos a execução do programa nesse ponto
-        # escolhemos essa linha para não incluir a escolha do usuário na soma
+        # escolhemos essa linha para não incluir a escolha do usuário na soma do tempo
         inicio = time.time()
         grupos = montaGrupos(grafo)
         somaQtdVertices = 0
