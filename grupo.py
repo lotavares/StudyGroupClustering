@@ -14,27 +14,6 @@ class Grupo:
         self.vertices.append(arestas[0])
         self.vertices.append(arestas[1])
         self.listaArestasOrd = []
-
-    def matrizAd(self):
-        print(self.arestas)
-        matriz = [0] * self.qtdVertices
-        
-        for lin in range(self.qtdVertices):
-            matriz[lin] = [0] * self.qtdVertices
-        
-        # em "matriz" armazenamos as arestas que estão em "arestas"
-        for i in range(self.qtdArestas):
-            a = self.arestas[i][0]
-            b = self.arestas[i][1]
-            matriz[a][b] = self.arestas[i][2]
-            matriz[b][a] = self.arestas[i][2]
-                
-        return matriz
-        
-    def imprimeMatrizAdjacenci(self, matriz):
-        print("\nMatriz de Adjacencia: \n")
-        for lin in range(len(matriz)):
-            print(matriz[lin])
     
     def matAdLimInf(self, grafo, matrizAdjacencia):
         while self.somaAptidao <= self.limInferior:
@@ -68,12 +47,6 @@ class Grupo:
                     self.arestas.append(aux)
                 self.qtdVertices += 1
                 self.vertices.append(vertice)
-                
-        print(self.somaAptidao)
-        print(self.somaArestas)
-        print(self.qtdVertices)
-        print(self.qtdArestas)
-        print(self.vertices)
 
     def matAdLimSup(self, grafo, matrizAdjacencia):
         cont = 0
@@ -107,12 +80,6 @@ class Grupo:
                 self.qtdVertices += 1
                 self.vertices.append(vertice)
             cont += 1
-
-        print(self.somaAptidao)
-        print(self.somaArestas)
-        print(self.qtdVertices)
-        print(self.qtdArestas)
-        print(self.vertices)
     
     def matIncLimInf(self, grafo, matrizIncidencia):
         cont = 0
@@ -156,18 +123,12 @@ class Grupo:
                             aux.append(matrizIncidencia[j][vertice])
                             self.arestas.append(aux)
                             contador += 0
+                            del(matrizIncidencia[j])
+                            grafo.qtdArestas -= 1
                         j += 1
                 self.qtdVertices += 1
                 self.vertices.append(vertice)
             cont += 1
-
-        for i in range(self.qtdVertices):
-            j = 0
-            while j < grafo.qtdArestas:
-                if matrizIncidencia[j][i] != 0:
-                    del(matrizIncidencia[j])
-                    grafo.qtdArestas -= 1
-                j += 1
     
     def matIncLimSup(self, grafo, matrizIncidencia):
         cont = 0
@@ -218,20 +179,6 @@ class Grupo:
                 self.vertices.append(vertice)
             cont += 1
         
-        for i in range(self.qtdVertices):
-            j = 0
-            while j < grafo.qtdArestas:
-                if matrizIncidencia[j][i] != 0:
-                    del(matrizIncidencia[j])
-                    grafo.qtdArestas -= 1
-                j += 1
-        
-        print(self.somaAptidao)
-        print(self.somaArestas)
-        print(self.qtdVertices)
-        print(self.qtdArestas)
-        print(self.vertices)
-        
     def listAdLimInf(self, grafo, listaAdjacencia):   
         while self.somaAptidao <= self.limInferior:
             maiorArestaAtual = 0
@@ -267,14 +214,6 @@ class Grupo:
                 self.qtdVertices += 1
                 self.vertices.append(vertice)
         
-        print(self.arestas)
-       
-        print(self.somaAptidao)
-        print(self.somaArestas)
-        print(self.qtdVertices)
-        print(self.qtdArestas)
-        print(self.vertices)
-                
     def listAdLimSup(self, grafo, listaAdjacencia):
         cont = 0
         while self.somaAptidao <= self.limSuperior and cont != grafo.qtdVertices:
@@ -311,9 +250,3 @@ class Grupo:
                 self.qtdVertices += 1
                 self.vertices.append(vertice)
             cont += 1
-        
-        print(self.somaAptidao)
-        print(self.somaArestas)
-        print(self.qtdVertices)
-        print(self.qtdArestas)
-        print(self.vertices)

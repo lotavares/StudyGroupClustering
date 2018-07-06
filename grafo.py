@@ -2,11 +2,10 @@
 
 class Grafo:
     # construtor da classe grafo
-    def __init__(self, nomeArq, qtdVertices, qtdArestas, arestas, tipoEstrutura, aptidao, inseridos, maioresArestas, limites, qtdGrupos):
+    def __init__(self, nomeArq, qtdVertices, qtdArestas, arestas, aptidao, inseridos, maioresArestas, limites, qtdGrupos):
         self.qtdVertices = qtdVertices
         self.qtdArestas = qtdArestas
         self.arestas = arestas
-        self.tipoEstrutura = tipoEstrutura
         self.aptidao = aptidao
         self.inseridos = inseridos
         self.maioresArestas = maioresArestas
