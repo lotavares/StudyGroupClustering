@@ -125,7 +125,7 @@ def main():
     # 'executando' é uma variável auxiliar para indicar se o usuário deseja rodar o programa mais vezes
     executando = True
     while executando:
-        nomeArq = input("\nNome do arquivo: ")
+        nomeArq = raw_input("\nNome do arquivo: ")
         arquivo = open(nomeArq)
         
         print('''\n--> Escolha sua forma de armazenamento do grafo:
@@ -134,7 +134,7 @@ def main():
         -Digite 3 para Lista de Adjacencia
         -Digite 4 para encerrar o programa''')
     
-        opcao = int(input("\nSua escolha e': "))
+        opcao = int(raw_input("\nSua escolha e': "))
         
         opcaoEscolhida = False
         while not(opcaoEscolhida):
@@ -142,7 +142,7 @@ def main():
                 opcaoEscolhida = True
             else:
                 print("\nEscolha invalida\n")
-                opcao = int(input("\nSua escolha e': "))
+                opcao = int(raw_input("\nSua escolha e': "))
         
         grafo = leArquivo(nomeArq)
         
@@ -184,7 +184,7 @@ def main():
             print('''\n--> Para mais informacoes de cada grupo:
             -Digite 1 para SIM
             -Digite 2 para NAO''')
-            escolha = int(input("\nSua escolha e': "))
+            escolha = int(raw_input("\nSua escolha e': "))
             
             # caso o usuário opte por obter as informações individuais dos grupos, as imprimimos
             if escolha == 1:
@@ -270,7 +270,7 @@ def main():
             print('''\n--> Para mais informacoes de cada grupo:
             -Digite 1 para SIM
             -Digite 2 para NAO''')
-            escolha = int(input("\nSua escolha e': "))
+            escolha = int(raw_input("\nSua escolha e': "))
             
             # caso o usuário opte por obter as informações individuais dos grupos, as imprimimos
             if escolha == 1:
@@ -297,7 +297,7 @@ def main():
             print('''\n--> Para executar novamente:
                 -Digite 1 para SIM
                 -Digite 2 para NAO''')
-            escolha = int(input("\nSua escolha e': "))
+            escolha = int(raw_input("\nSua escolha e': "))
             
             if escolha == 2:
                 executando = False

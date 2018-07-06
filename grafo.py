@@ -12,7 +12,7 @@ class Grafo:
         self.limites = limites
         self.qtdGrupos = qtdGrupos
     
-    # estrutura de dado: matriz de adjacencia
+    # estrutura de dado: matriz de adjacência
     def matrizAdjacencia(self):
         matriz = [0] * self.qtdVertices
         
@@ -28,13 +28,14 @@ class Grafo:
                 
         return matriz
 
-    # estrutura de dado: matriz de incidencia
+    # estrutura de dado: matriz de incidência
     def matrizIncidencia(self):
         matriz = [0] * self.qtdArestas
 
         for lin in range(self.qtdArestas):
             matriz[lin] = [0] * self.qtdVertices
-            
+        
+        # em "matriz" armazenamos as arestas que estão em "arestas"
         for i in range(self.qtdArestas):
             a = self.arestas[i][0]
             b = self.arestas[i][1]
@@ -50,6 +51,7 @@ class Grafo:
         for lin in range(self.qtdVertices):
             listaAdjacencia[lin] = []
 
+        # em "listaAdjacencia" armazenamos as arestas que estão em "arestas"
         for i in range(self.qtdArestas):
             a = self.arestas[i][0]
             b = self.arestas[i][1]
@@ -57,21 +59,3 @@ class Grafo:
             listaAdjacencia[b].append([a, self.arestas[i][2]])
             
         return listaAdjacencia
-
-    # imprime matriz de adjacencia
-    def imprimeMatrizAdjacencia(self, matriz):
-        print("\nMatriz de Adjacencia: \n")
-        for lin in range(len(matriz)):
-            print(matriz[lin])
-
-    # imprime matriz de incidencia
-    def imprimeMatrizIncidencia(self, matriz):
-        print("\nMatriz de Incidencia: \n")
-        for lin in range(self.qtdArestas):
-            print(matriz[lin])
-
-    # imnprime lista de incidencia
-    def imprimeListaAdjacencia(self, lista):
-        print("\nLista de Adjacencias: \n")
-        for i in range(len(lista)):
-            print(i, "->", lista[i])
