@@ -177,7 +177,7 @@ def main():
             fim = time.time()
             
             # imprimimos as informações gerais
-            print("\nQuantidade de vértices pertencentes a algum grupo: ", somaQtdVertices)
+            print("\nQuantidade de vertices pertencentes a algum grupo: ", somaQtdVertices)
             print("Somatorio total das arestas de todos os grupos: ", somaArestas)
             print("Tempo de execucao em segundos: ", fim - inicio)
             
@@ -220,7 +220,7 @@ def main():
             fim = time.time()
 
             # imprimimos as informações gerais
-            print("\nQuantidade de vértices pertencentes a algum grupo: ", somaQtdVertices)
+            print("\nQuantidade de vertices pertencentes a algum grupo: ", somaQtdVertices)
             print("Somatorio total das arestas de todos os grupos: ", somaArestas)
             print("Tempo de execucao em segundos: ", fim - inicio)
             
@@ -263,7 +263,7 @@ def main():
             fim = time.time()
 
             # imprimimos as informações gerais
-            print("\nQuantidade de vértices pertencentes a algum grupo: ", somaQtdVertices)
+            print("\nQuantidade de vertices pertencentes a algum grupo: ", somaQtdVertices)
             print("Somatorio total das arestas de todos os grupos: ", somaArestas)
             print("Tempo de execucao em segundos: ", fim - inicio)
             
@@ -295,8 +295,8 @@ def main():
         # caso o usuário não tenha entrado com um caractere inválido, e não optou por encerrar o programa, ele tem a opção de executar novamente o programa
         if not(opcaoInvalida) and opcao != 4:
             print('''\n--> Para executar novamente:
-                -Digite 1 para SIM
-                -Digite 2 para NAO''')
+            -Digite 1 para SIM
+            -Digite 2 para NAO''')
             escolha = int(raw_input("\nSua escolha e': "))
             
             if escolha == 2:
