@@ -3,6 +3,29 @@
 from grafo import Grafo
 from grupo import Grupo
 
+def quickSortAux(vetor, esquerda, direita):
+    i = esquerda
+    j = direita
+    pivo = vetor[int((j + i) / 2)][2]
+    while i <= j:
+        while vetor[i][2] > pivo:
+            i += 1
+        while (vetor[j][2] < pivo):
+            j -= 1
+        if i <= j:
+            aux = vetor[i]
+            vetor[i] = vetor[j]
+            vetor[j] = aux
+            i += 1
+            j -= 1
+    if esquerda < j:
+        quickSortAux(vetor, esquerda, j)
+    if i < direita:
+        quickSortAux(vetor, i, direita)
+
+def quickSort(vetor, tam):
+    quickSortAux(vetor, 0, tam - 1)
+
 def leArquivo(nomeArq, tipoEstrutura):
     arquivo = open(nomeArq)
     
@@ -44,10 +67,7 @@ def leArquivo(nomeArq, tipoEstrutura):
     
     # "arestas" é uma matriz, em que cada linha tem 3 colunas que guardam u, v e duv, respectivamente
     
-    # maioresArestas
-    maioresArestas = [0] * qtdGrupos
-    for i in range(qtdGrupos):
-        maioresArestas[i] = [0] * 3
+
     # lista que define vertices que ja foram inseridos em um determinado grupo
     inseridos = [False] * qtdVertices
     #leitura dos vertices do arquivo
@@ -57,48 +77,35 @@ def leArquivo(nomeArq, tipoEstrutura):
         arestas[i][0] = (int(valores[0]))
         arestas[i][1] = (int(valores[1]))
         arestas[i][2] = (float(valores[2]))
-        
-        # (menorDoMaior) é o valor da aresta de menor peso da matriz (maioresArestas)
-        menorDoMaior = maioresArestas[0][2]
-        # posicao referente a aresta de menor valor(menorDoMaior)
-        posMenor = 0
-        for j in range(qtdGrupos):
-            #verifica se o valor a ser inserido é menor que o menor valor da matriz 
-            if maioresArestas[j][2] <= menorDoMaior:
-                menorDoMaior = maioresArestas[j][2]
-                posMenor = j
-        # as qtdGrupos maiores arestas são armazenadas em "maioresArestas"
-        if inseridos[arestas[i][0]] or inseridos[arestas[i][1]]:
-            for j in range(qtdGrupos):
-                if inseridos[arestas[i][0]]:
-                    if maioresArestas[j][0] == arestas[i][0] or maioresArestas[j][0] == arestas[i][1]:
-                        if arestas[i][2] > maioresArestas[j][2]:
-                            inseridos[maioresArestas[j][1]] = False
-                            maioresArestas[j][0] = arestas[i][0]
-                            maioresArestas[j][1] = arestas[i][1]
-                            maioresArestas[j][2] = arestas[i][2]
-                            inseridos[arestas[i][0]] = True
-                            inseridos[arestas[i][1]] = True
-                else:
-                    if maioresArestas[j][1] == arestas[i][0] or maioresArestas[j][1] == arestas[i][1]:
-                        if arestas[i][2] > maioresArestas[j][2]:
-                            inseridos[maioresArestas[j][0]] = False
-                            maioresArestas[j][0] = arestas[i][0]
-                            maioresArestas[j][1] = arestas[i][1]
-                            maioresArestas[j][2] = arestas[i][2]
-                            inseridos[arestas[i][0]] = True
-                            inseridos[arestas[i][1]] = True
-        elif arestas[i][2] > menorDoMaior:
-            inseridos[arestas[i][0]] = True
-            inseridos[arestas[i][1]] = True
-            inseridos[maioresArestas[posMenor][0]] = False
-            inseridos[maioresArestas[posMenor][1]] = False
-            maioresArestas[posMenor][0] = arestas[i][0]
-            maioresArestas[posMenor][1] = arestas[i][1]
-            maioresArestas[posMenor][2] = arestas[i][2]
-            
-    #~ for i in range(qtdGrupos):
-        #~ print(maioresArestas[i])
+
+    # colocamos em 'listaAux' todas as arestas do grafo e a ordenamos
+    listaAux = arestas
+    quickSort(listaAux, qtdArestas)
+    
+    # maioresArestas
+    maioresArestas = []
+    qtdInseridos = 0
+    i = 0
+    # colocamos em 'maioresArestas' as maiores arestas do grafo (a quantidade é a quantidade de grupos necessários)
+    while i < qtdArestas and qtdInseridos < qtdGrupos:
+        jaExiste = False
+        # vemos se a aresta atual pode ser inserida, ela poderá se nenhum vertice já fizer parte de 'maioresArestas'
+        for j in range(len(maioresArestas)):
+            if listaAux[i][0] == maioresArestas[j][0] or listaAux[i][0] == maioresArestas[j][1]:
+                jaExiste = True
+            if listaAux[i][1] == maioresArestas[j][0] or listaAux[i][1] == maioresArestas[j][1]:
+                jaExiste = True
+        # caso a aresta possa ser inserida, a inserimos
+        if not(jaExiste):
+            aux = listaAux[i]
+            maioresArestas.append(aux)
+            qtdInseridos += 1
+        i += 1
+
+    # 'inseridos' recebe true nas posições dos vértices que estãos em 'maioresArestas'
+    for i in range(qtdGrupos):
+        inseridos[maioresArestas[i][0]] = True
+        inseridos[maioresArestas[i][1]] = True
 
     # chama o construtor do grafo
     grafo = Grafo(nomeArq, qtdVertices, qtdArestas, arestas, tipoEstrutura, aptidao, inseridos, maioresArestas, limites, qtdGrupos)
@@ -112,32 +119,6 @@ def montaGrupos(grafo):
         grupos[i] = Grupo(grafo.limites[i][0], grafo.limites[i][1], grafo.maioresArestas[i])
         grupos[i].somaAptidao = grafo.aptidao[grafo.maioresArestas[i][0]] + grafo.aptidao[grafo.maioresArestas[i][1]]
         grupos[i].somaArestas = grafo.maioresArestas[i][2]
-        
-        listaAux = []
-        for j in range(grafo.qtdArestas):
-            if grupos[i].vertices[0] == grafo.arestas[j][0] or grupos[i].vertices[0] == grafo.arestas[j][1]:
-                listaAux.append(grafo.arestas[j])
-        
-        grupos[i].listaArestasOrd.append(listaAux)
-        
-        listaAux = []
-        
-        for j in range(grafo.qtdArestas):
-            if grupos[i].vertices[1] == grafo.arestas[j][0] or grupos[i].vertices[1] == grafo.arestas[j][1]:
-                listaAux.append(grafo.arestas[j])
-        
-        grupos[i].listaArestasOrd.append(listaAux)
-        
-        #~ print("Grupo ANTES", i, grupos[i].listaArestasOrd[0])
-        #~ print("Grupo ANTES", i, grupos[i].listaArestasOrd[1])
-        
-        grupos[i].quickSort(grupos[i].listaArestasOrd[0], len(grupos[i].listaArestasOrd[0]))
-        grupos[i].quickSort(grupos[i].listaArestasOrd[1], len(grupos[i].listaArestasOrd[1]))
-        
-        #~ print(len(grupos[i].listaArestasOrd[0]))
-        #~ print("Grupo ", i, grupos[i].listaArestasOrd[0])
-        #~ print("Grupo ", i, grupos[i].listaArestasOrd[1])
-        
         #~ print grupos[i].limInferior
         #~ print grupos[i].limSuperior
         #~ print grupos[i].somaAptidao
@@ -182,63 +163,48 @@ def main():
     somaQtdVertices = 0
     somaArestas = 0
     
-    print(grupos[0].listaArestasOrd[0][1][2])
-    
-    vetor = []
-    
-    #~ j = 240
-    #~ for i in range(240):
-        #~ vetor.append(j)
-        #~ j -= 1
-    
-    #~ print (vetor)
-    
-    #~ grupos[0].quickSort(vetor, 240)
-    
-    #~ print(vetor)
-    
-    #~ for i in range(grafo.qtdGrupos):
-        #~ print("GRUPO ", i)
-        #~ grupos[i].matAdLimInf(grafo, estrutura)
-        #~ somaQtdVertices += grupos[i].qtdVertices
-        #~ somaArestas += grupos[i].somaArestas
-    
-    #~ print(somaQtdVertices, somaArestas)
-
-    #~ somaQtdVertices = 0
-    #~ for i in range(grafo.qtdGrupos):
-        #~ print("GRUPO ", i)
-        #~ grupos[i].matAdLimSup(grafo, estrutura)
-        #~ somaQtdVertices += grupos[i].qtdVertices
-        #~ somaArestas += grupos[i].somaArestas
-    
-    for i in range(grafo.qtdGrupos):
-        print("GRUPO", i)
-        grupos[i].matIncLimInf(grafo, estrutura)
-        somaQtdVertices += grupos[i].qtdVertices
-        somaArestas += grupos[i].somaArestas
-    
-    somaQtdVertices = 0
-    print(somaQtdVertices, somaArestas)
-    
     for i in range(grafo.qtdGrupos):
         print("GRUPO ", i)
-        grupos[i].matIncLimSup(grafo, estrutura)
+        grupos[i].matAdLimInf(grafo, estrutura)
         somaQtdVertices += grupos[i].qtdVertices
         somaArestas += grupos[i].somaArestas
+    
+    print(somaQtdVertices, somaArestas)
+
+    somaQtdVertices = 0
+    for i in range(grafo.qtdGrupos):
+        print("GRUPO ", i)
+        grupos[i].matAdLimSup(grafo, estrutura)
+        somaQtdVertices += grupos[i].qtdVertices
+        somaArestas += grupos[i].somaArestas
+    
+    #~ for i in range(grafo.qtdGrupos):
+        #~ print("GRUPO", i)
+        #~ grupos[i].matIncLimInf(grafo, estrutura)
+        #~ somaQtdVertices += grupos[i].qtdVertices
+        #~ somaArestas += grupos[i].somaArestas
+    
+    #~ somaQtdVertices = 0
+    #~ print(somaQtdVertices, somaArestas)
+    
+    #~ for i in range(grafo.qtdGrupos):
+        #~ print("GRUPO ", i)
+        #~ grupos[i].matIncLimSup(grafo, estrutura)
+        #~ somaQtdVertices += grupos[i].qtdVertices
+        #~ somaArestas += grupos[i].somaArestas
         
     #~ print somaQtdVertices, somaArestas
 
     #~ for i in range(grafo.qtdGrupos):
-        #~ print "GRUPO ", i
+        #~ print("GRUPO ", i)
         #~ grupos[i].listAdLimInf(grafo, estrutura)
         #~ somaQtdVertices += grupos[i].qtdVertices
         #~ somaArestas += grupos[i].somaArestas
         
-    #~ print somaQtdVertices, somaArestas
+    #~ print(somaQtdVertices, somaArestas)
     #~ somaQtdVertices = 0
     #~ for i in range(grafo.qtdGrupos):
-        #~ print "GRUPO ", i
+        #~ print ("GRUPO ", i)
         #~ grupos[i].listAdLimSup(grafo, estrutura)
         #~ somaQtdVertices += grupos[i].qtdVertices
         #~ somaArestas += grupos[i].somaArestas

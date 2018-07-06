@@ -14,38 +14,6 @@ class Grupo:
         self.vertices.append(arestas[0])
         self.vertices.append(arestas[1])
         self.listaArestasOrd = []
-    
-    def quickSortAux(self, vetor, esquerda, direita):
-        i = esquerda
-        j = direita
-        pivo = vetor[int((j + i) / 2)][2]
-        while i <= j:
-            while vetor[i][2] > pivo:
-                i += 1
-            while (vetor[j][2] < pivo):
-                j -= 1
-            if i <= j:
-                aux = vetor[i]
-                vetor[i] = vetor[j]
-                vetor[j] = aux
-                i += 1
-                j -= 1
-        if esquerda < j:
-            self.quickSortAux(vetor, esquerda, j)
-        if i < direita:
-            self.quickSortAux(vetor, i, direita)
-
-    def quickSort(self, vetor, tam):
-        self.quickSortAux(vetor, 0, tam - 1)
-
-    def listaArestasDoVertice(self, grafo):
-        listaAux = []
-        for j in range(grafo.qtdArestas):
-            if self.vertices[-1] == grafo.arestas[j][0] or self.vertices[-1] == grafo.arestas[j][1]:
-                listaAux.append(grafo.arestas[j])
-        
-        self.quickSort(listaAux, len(listaAux))
-        self.listaArestasOrd.append(listaAux)
 
     def matrizAd(self):
         print(self.arestas)
@@ -100,8 +68,7 @@ class Grupo:
                     self.arestas.append(aux)
                 self.qtdVertices += 1
                 self.vertices.append(vertice)
-                #~ self.quickSort(grafo.arestas)
-
+                
         print(self.somaAptidao)
         print(self.somaArestas)
         print(self.qtdVertices)
@@ -299,6 +266,8 @@ class Grupo:
                             self.arestas.append(aux)
                 self.qtdVertices += 1
                 self.vertices.append(vertice)
+        
+        print(self.arestas)
        
         print(self.somaAptidao)
         print(self.somaArestas)
