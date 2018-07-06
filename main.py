@@ -2,6 +2,7 @@
 
 from grafo import Grafo
 from grupo import Grupo
+import time
 
 def quickSortAux(vetor, esquerda, direita):
     i = esquerda
@@ -158,6 +159,7 @@ def main():
         estrutura = grafo.listaAdjacencia()
         #~ grafo.imprimeListaAdjacencia(estrutura)
 
+    inicio = time.time()
     
     grupos = montaGrupos(grafo)
     somaQtdVertices = 0
@@ -210,6 +212,9 @@ def main():
         #~ somaArestas += grupos[i].somaArestas
         
     print(somaQtdVertices, somaArestas)
+    
+    fim = time.time()
+    print(fim - inicio)
     
     #~ mana = grupos[0].matrizAd()
     #~ mana.imprimeMatrizAdjacenci()
