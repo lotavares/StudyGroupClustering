@@ -128,10 +128,10 @@ def main():
         nomeArq = raw_input("\nNome do arquivo: ")
         arquivo = open(nomeArq)
         
-        print('''\n--> Escolha sua forma de armazenamento do grafo:
-        -Digite 1 para Matriz de Adjacencia
-        -Digite 2 para Matriz de Incidencia
-        -Digite 3 para Lista de Adjacencia
+        print('''\n--> Escolha uma opcao:
+        -Digite 1 para executar em uma Matriz de Adjacencia
+        -Digite 2 para executar em uma Matriz de Incidencia
+        -Digite 3 para executar em uma Lista de Adjacencia
         -Digite 4 para encerrar o programa''')
     
         opcao = int(raw_input("\nSua escolha e': "))
