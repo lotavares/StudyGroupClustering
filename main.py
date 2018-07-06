@@ -4,6 +4,7 @@ from grafo import Grafo
 from grupo import Grupo
 import time
 
+# método de ordenação quick-sort, utilizado para ordenar as arestas em forma decrescente
 def quickSortAux(vetor, esquerda, direita):
     i = esquerda
     j = direita
@@ -27,6 +28,7 @@ def quickSortAux(vetor, esquerda, direita):
 def quickSort(vetor, tam):
     quickSortAux(vetor, 0, tam - 1)
 
+# leitura do arquivo, o construtor do grafo é chamado nessa função
 def leArquivo(nomeArq):
     arquivo = open(nomeArq)
     
@@ -48,9 +50,6 @@ def leArquivo(nomeArq):
         limites[i][0] = int(limitesAux[posAux])
         limites[i][1] = int(limitesAux[posAux + 1])
         posAux += 2
-        
-    #~ for i in range(qtdGrupos):
-        #~ print limites[i]
     
     # leitura da terceira linha, pesos dos vértices
     aptidao = arquivo.readline()
@@ -63,11 +62,11 @@ def leArquivo(nomeArq):
     for i in range(qtdArestas):
         arestas[i] = [0] * 3
     
-    # "arestas" é uma matriz, em que cada linha tem 3 colunas que guardam u, v e duv, respectivamente
+    # 'arestas' é uma lista de arestas, cada aresta contendo dois vértices e o peso da aresta que os liga
     
-
-    # lista que define vertices que ja foram inseridos em um determinado grupo
+    # lista que define quais vertices já fazem parte de um grupo, todos recebem false inicialmente
     inseridos = [False] * qtdVertices
+   
     #leitura dos vertices do arquivo
     for i in range(qtdArestas):
         linha = arquivo.readline()
@@ -80,11 +79,12 @@ def leArquivo(nomeArq):
     listaAux = arestas
     quickSort(listaAux, qtdArestas)
     
-    # maioresArestas
+    # 'maioresArestas' guarda as maiores arestas do grafo
     maioresArestas = []
     qtdInseridos = 0
     i = 0
-    # colocamos em 'maioresArestas' as maiores arestas do grafo (a quantidade é a quantidade de grupos necessários)
+    
+    # 'maioresArestas' recebe as maiores arestas, o tamanho de 'maiores arestas' é determinado pela quantidade de grupos exigidas
     while i < qtdArestas and qtdInseridos < qtdGrupos:
         jaExiste = False
         # vemos se a aresta atual pode ser inserida, ela poderá se nenhum vertice já fizer parte de 'maioresArestas'
@@ -93,7 +93,7 @@ def leArquivo(nomeArq):
                 jaExiste = True
             if listaAux[i][1] == maioresArestas[j][0] or listaAux[i][1] == maioresArestas[j][1]:
                 jaExiste = True
-        # caso a aresta possa ser inserida, a inserimos
+        # caso a aresta possa ser inserida, a inserimos, caso não, continuamos verificando qual pode
         if not(jaExiste):
             aux = listaAux[i]
             maioresArestas.append(aux)
@@ -105,35 +105,30 @@ def leArquivo(nomeArq):
         inseridos[maioresArestas[i][0]] = True
         inseridos[maioresArestas[i][1]] = True
 
-    # chama o construtor do grafo
+    # chamada do construtor do grafo
     grafo = Grafo(nomeArq, qtdVertices, qtdArestas, arestas, aptidao, inseridos, maioresArestas, limites, qtdGrupos)
     
     return grafo
 
 def montaGrupos(grafo):
-    # cria uma lista de grupos contendo inicialmente dois vertices e uma aresta (uma das 12 maiores)
+    # cria uma lista de grupos contendo inicialmente dois vertices e uma aresta, cada grupo recebe uma das 'maioresArestas'
+    # dessa forma, iniciamos todos os grupos
     grupos = [Grupo] * grafo.qtdGrupos
     for i in range(grafo.qtdGrupos):
         grupos[i] = Grupo(grafo.limites[i][0], grafo.limites[i][1], grafo.maioresArestas[i])
         grupos[i].somaAptidao = grafo.aptidao[grafo.maioresArestas[i][0]] + grafo.aptidao[grafo.maioresArestas[i][1]]
         grupos[i].somaArestas = grafo.maioresArestas[i][2]
-        #~ print grupos[i].limInferior
-        #~ print grupos[i].limSuperior
-        #~ print grupos[i].somaAptidao
-        #~ print grupos[i].somaArestas
-        #~ print grupos[i].qtdVertices
-        #~ print grupos[i].qtdArestas
-        #~ print i, ": " , grupos[i].arestas , "\n"
-        #~ print grupos[i].vertices
+    
     return grupos
 
 def main():
+    # 'executando' é uma variável auxiliar para indicar se o usuário deseja rodar o programa mais vezes
     executando = True
     while executando:
         nomeArq = input("\nNome do arquivo: ")
         arquivo = open(nomeArq)
         
-        print('''--> Escolha sua forma de armazenamento do grafo:
+        print('''\n--> Escolha sua forma de armazenamento do grafo:
         -Digite 1 para Matriz de Adjacencia
         -Digite 2 para Matriz de Incidencia
         -Digite 3 para Lista de Adjacencia
@@ -149,17 +144,21 @@ def main():
                 print("\nTipo de estrutura invalida\n")
         
         grafo = leArquivo(nomeArq)
-
+        
+        # iniciamos a execução do programa nesse ponto
+        # escolhemos essa linha para não incluir a escolha do usuário na soma
         inicio = time.time()
         grupos = montaGrupos(grafo)
         somaQtdVertices = 0
         somaArestas = 0
-        # variavel utilizada no else
         opcaoInvalida = False
         
-        if opcao == 1: # roda o arquivo para MATRIZ DE ADJACENCIA
+        # executa o programa utilizando matriz de adjacência
+        if opcao == 1:
+            # criação da matriz de adjacência
             estrutura = grafo.matrizAdjacencia()
-        
+            
+            # chamada do método que calcula quais vértices devem fazer parte de 'grupos[i]' com o limitante inferior
             for i in range(grafo.qtdGrupos):
                 grupos[i].matAdLimInf(grafo, estrutura)
                 somaQtdVertices += grupos[i].qtdVertices
@@ -167,12 +166,16 @@ def main():
 
             somaQtdVertices = 0
             
+            # chamada do método que calcula quais vértices devem fazer parte de 'grupos[i]' com o limitante superior
             for i in range(grafo.qtdGrupos):
                 grupos[i].matAdLimSup(grafo, estrutura)
                 somaQtdVertices += grupos[i].qtdVertices
                 somaArestas += grupos[i].somaArestas
             
+            # encerramos o tempo nessa linha, pois a partir dela, temos apenas prints
             fim = time.time()
+            
+            # imprimimos as informações gerais
             print("\nQuantidade de vértices pertencentes a algum grupo: ", somaQtdVertices)
             print("Somatorio total das arestas de todos os grupos: ", somaArestas)
             print("Tempo de execucao em segundos: ", fim - inicio)
@@ -182,6 +185,7 @@ def main():
             -Digite 2 para NAO''')
             escolha = int(input("\nSua escolha e': "))
             
+            # caso o usuário opte por obter as informações individuais dos grupos, as imprimimos
             if escolha == 1:
                 for i in range(grafo.qtdGrupos):
                     print("\nGrupo: ", (i + 1))
@@ -192,9 +196,12 @@ def main():
                     print("Vertices: ", grupos[i].vertices)
                     print("Arestas: ", grupos[i].arestas)
         
+        # executa o programa utilizando matriz de incidencia
         elif opcao == 2:
+            # criação da matriz de incidência
             estrutura = grafo.matrizIncidencia()
             
+            # chamada do método que calcula quais vértices devem fazer parte de 'grupos[i]' com o limitante inferior
             for i in range(grafo.qtdGrupos):
                 grupos[i].matIncLimInf(grafo, estrutura)
                 somaQtdVertices += grupos[i].qtdVertices
@@ -202,12 +209,16 @@ def main():
             
             somaQtdVertices = 0
             
+            # chamada do método que calcula quais vértices devem fazer parte de 'grupos[i]' com o limitante superior
             for i in range(grafo.qtdGrupos):
                 grupos[i].matIncLimSup(grafo, estrutura)
                 somaQtdVertices += grupos[i].qtdVertices
                 somaArestas += grupos[i].somaArestas
                 
+            # encerramos o tempo nessa linha, pois a partir dela, temos apenas prints
             fim = time.time()
+
+            # imprimimos as informações gerais
             print("\nQuantidade de vértices pertencentes a algum grupo: ", somaQtdVertices)
             print("Somatorio total das arestas de todos os grupos: ", somaArestas)
             print("Tempo de execucao em segundos: ", fim - inicio)
@@ -217,19 +228,23 @@ def main():
             -Digite 2 para NAO''')
             escolha = int(input("\nSua escolha e': "))
             
+            # caso o usuário opte por obter as informações individuais dos grupos, as imprimimos
             if escolha == 1:
                 for i in range(grafo.qtdGrupos):
                     print("\nGrupo: ", (i + 1))
-                    print("Aptidao total: ", grupos[i].somaAptidao)
+                    print("Somatorio das aptidoes: ", grupos[i].somaAptidao)
                     print("Somatorio das arestas: ", grupos[i].somaArestas)
                     print("Somatorio da quantidade de vertices: ", grupos[i].qtdVertices)
                     print("Quantidade de arestas: ", grupos[i].qtdArestas)
                     print("Vertices: ", grupos[i].vertices)
                     print("Arestas: ", grupos[i].arestas)
-            
+        
+        # executa o programa utilizando lista de adjacencia
         elif opcao == 3:
+            # criação da lista de adjacência
             estrutura = grafo.listaAdjacencia()
             
+            # chamada do método que calcula quais vértices devem fazer parte de 'grupos[i]' com o limitante inferior
             for i in range(grafo.qtdGrupos):
                 grupos[i].listAdLimInf(grafo, estrutura)
                 somaQtdVertices += grupos[i].qtdVertices
@@ -237,12 +252,16 @@ def main():
                 
             somaQtdVertices = 0
             
+            # chamada do método que calcula quais vértices devem fazer parte de 'grupos[i]' com o limitante superior
             for i in range(grafo.qtdGrupos):
                 grupos[i].listAdLimSup(grafo, estrutura)
                 somaQtdVertices += grupos[i].qtdVertices
                 somaArestas += grupos[i].somaArestas
                 
+            # encerramos o tempo nessa linha, pois a partir dela, temos apenas prints
             fim = time.time()
+
+            # imprimimos as informações gerais
             print("\nQuantidade de vértices pertencentes a algum grupo: ", somaQtdVertices)
             print("Somatorio total das arestas de todos os grupos: ", somaArestas)
             print("Tempo de execucao em segundos: ", fim - inicio)
@@ -252,23 +271,27 @@ def main():
             -Digite 2 para NAO''')
             escolha = int(input("\nSua escolha e': "))
             
+            # caso o usuário opte por obter as informações individuais dos grupos, as imprimimos
             if escolha == 1:
                 for i in range(grafo.qtdGrupos):
                     print("\nGrupo: ", (i + 1))
-                    print("Aptidao total: ", grupos[i].somaAptidao)
+                    print("Somatorio das aptidoes: ", grupos[i].somaAptidao)
                     print("Somatorio das arestas: ", grupos[i].somaArestas)
                     print("Somatorio da quantidade de vertices: ", grupos[i].qtdVertices)
                     print("Quantidade de arestas: ", grupos[i].qtdArestas)
                     print("Vertices: ", grupos[i].vertices)
                     print("Arestas: ", grupos[i].arestas)
-    
+        
+        # o usuário optou por terminar a execução do programa
         elif opcao == 4:
             executando = False
         
+        # o usuário entrou com um caractere inválido
         else:
             print("\n->Opcao invalida, tente novamente\n")
             opcaoInvalida = True
         
+        # caso o usuário não tenha entrado com um caractere inválido, e não optou por encerrar o programa, ele tem a opção de executar novamente o programa
         if not(opcaoInvalida) and opcao != 4:
             print('''\n--> Para executar novamente:
                 -Digite 1 para SIM
