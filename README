@@ -1,5 +1,0 @@
--> Instruções de uso:
-    - Basta executar o arquivo 'main.py' com os demais arquivos enviados estando na mesma pasta
-
--> Observações adicionais:
-    - Os arquivos para teste colocados no Campus Virtual estavam dando um erro de leitura de arquivo. Descobrimos que ao final da terceira linha (onde os pesos dos vértices são passados), havia alguns espaços em brancos em alguns dos arquivos de teste (P1.txt a P5.txt), retirando-os, a execução ocorre sem problemas.
