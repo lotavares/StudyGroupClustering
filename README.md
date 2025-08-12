@@ -1,6 +1,6 @@
-### Study Group Formation
+### Study Group Clustering
 
-The implementation consisted of developing a method to solve a study group formation problem. In this context, each student *u* has a score *pu*, which indicates their aptitude level for solving the proposed problem. The total number of student groups to be formed is *g*. The groups have minimum and maximum aptitude limits given by *L* and *U*, respectively. Each student must belong to only one group. The relationship between each pair of students *u* and *v* is given by the value *duv ∈ R*, which quantifies the differences in characteristics between the two students relative to solving the proposed problem. Our goal was to create *g* student groups that maximize the sum of differences among the students chosen to belong to each group.
+The implementation consisted of developing a method to solve a study group clustering problem. In this context, each student *u* has a score *pu*, which indicates their aptitude level for solving the proposed problem. The total number of student groups to be formed is *g*. The groups have minimum and maximum aptitude limits given by *L* and *U*, respectively. Each student must belong to only one group. The relationship between each pair of students *u* and *v* is given by the value *duv ∈ R*, which quantifies the differences in characteristics between the two students relative to solving the proposed problem. Our goal was to create *g* student groups that maximize the sum of differences among the students chosen to belong to each group.
 
 #### Input and Execution
 
