@@ -1,35 +1,35 @@
-### Montagem de grupos de estudo
+### Study Group Formation
 
-A implementação consistiu no desenvolvimento de uma forma de solucionar um problema de montagem de grupos de estudo. Nesse sentido, cada estudante *u* possui uma nota *pu* , que indica o grau de aptidão para a resolução do problema proposto. O total de grupos de estudantes a ser formado é igual a *g*. Os grupos possuem limites mínimos e máximos de aptidão dados por *L* e *U* , respectivamente. Cada estudante deve pertencer a apenas um grupo. A relação entre cada par de estudantes *u* e *v* é dado pelo valor *duv ∈ R*, que quantifica as diferenças das características entre os dois estudantes relativas à resolução do problema proposto. Nosso objetivo foi criar *g* grupos de estudantes que maximizasse o somatório das diferenças entre os estudantes escolhidos a pertencer a cada grupo.
+The implementation consisted of developing a method to solve a study group formation problem. In this context, each student *u* has a score *pu*, which indicates their aptitude level for solving the proposed problem. The total number of student groups to be formed is *g*. The groups have minimum and maximum aptitude limits given by *L* and *U*, respectively. Each student must belong to only one group. The relationship between each pair of students *u* and *v* is given by the value *duv ∈ R*, which quantifies the differences in characteristics between the two students relative to solving the proposed problem. Our goal was to create *g* student groups that maximize the sum of differences among the students chosen to belong to each group.
 
-#### Entrada e Execução
+#### Input and Execution
 
-O programa recebe como entrada um arquivo texto. Os arquivos disponíveis para teste estão na pasta *arquivos_teste*, onde em *readme.txt* estão as especificações das instâncias de teste.
+The program receives a text file as input. The files available for testing are in the *arquivos_teste* folder, where the specifications of the test instances are in *readme.txt*.
 
-Foi utilizado o python 3 para a implementação.
+Python 3 was used for the implementation.
 
-Para executar, basta rodar o comando `python3 main.py` no terminal e entrar com o nome do arquivo de teste. Após, basta escolher entre as opções apresentadas para resolver o problema, as opções são:
+To run, simply execute the command `python3 main.py` in the terminal and enter the name of the test file. Then, choose one of the options presented to solve the problem. The options are:
 
-	* executar o programa utilizando matriz de adjacência
-	* executar o programa utilizando matriz de incidência
-	* executar o programa utilizando lista de adjacência
+	* run the program using an adjacency matrix
+	* run the program using an incidence matrix
+	* run the program using an adjacency list
 
-#### Resultados
+#### Results
 
-Os resultados são impressos ao final da execução na seguinte ordem:
+The results are printed at the end of execution in the following order:
 
-	* quantidade de vértices pertencentes a algum grupo (total de vértices do grafo)
-	* somatório total das arestas de todos os grupos
-	* tempo de execução do programa em segundos
+	* number of vertices belonging to any group (total vertices in the graph)
+	* total sum of the edges of all groups
+	* program execution time in seconds
 
-As informações individuais dos grupos podem ser impressas no terminal após a execução no seguinte formato:
+The individual information of the groups can be printed in the terminal after execution in the following format:
 
-	* índice do grupo
-	* somatório das aptidões
-	* somatório das arestas
-	* somatório da quantidade de vértices
-	* quantidade de arestas
-	* vértices
-	* arestas
+	* group index
+	* sum of aptitudes
+	* sum of edges
+	* sum of the number of vertices
+	* number of edges
+	* vertices
+	* edges
 
 Copyright (c) 2018 Felipe Ferreira Carvalho Silva, Lorena Kerollen Botelho Tavares, Rodrigo Pinto Herculano
